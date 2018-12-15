@@ -39,7 +39,7 @@ class App extends Component {
     
     //Read the URL and add the ApI Key
     const appID = 'e5556cfcfe952fb14cc15760342c5eaf';
-    let url = `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${appID}`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${appID}`;
 
     if(!city || !country) return null;
 
@@ -76,11 +76,16 @@ class App extends Component {
   
   render() {
 
-    const error = this.state.error;
+    const error = this.state.error,
+          {cod} = this.state.result;
+
     let result;
 
     if(error){
       result=<Error mesage="Required fields" />
+    }
+    else if(cod === "404"){
+      result=<Error mesage="City not found" />
     }
     else{
       result=<Weather res = {this.state.result}/>
